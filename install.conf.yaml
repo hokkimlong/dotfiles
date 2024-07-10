@@ -7,11 +7,17 @@
 - link:
     ~/.bashrc: bashrc
     ~/.zshrc: zshrc
+    ~/.tmux.conf: tmux.conf
+    ~/.zshrc.pre-oh-my-zsh: zshrc.pre-oh-my-zsh
     ~/.config/nvim:
       path: nvim/**
       glob: true
       create: true
     ~/.wezterm.lua: wezterm.lua
+    /usr/local/bin:
+      glob: true
+      path: bin/**
+      create: true
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

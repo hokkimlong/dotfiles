@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# If one argument is provided, use it as the selected directory
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    # Use fzf to select a directory if no argument is provided
+    selected=$(find ~/work ~/ ~/Documents/playgorund -mindepth 1 -maxdepth 1 -type d | fzf)
+fi
+
+# Exit if no directory is selected
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+# Replace dots in the directory name with underscores to form the session name
+selected_name=$(basename "$selected" | tr . _)
+
+# Check if tmux is running
+tmux_running=$(pgrep tmux)
+
+# If not in a tmux session and tmux is not running, create a new tmux session
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    tmux new-session -s $selected_name -c $selected
+    exit 0
+fi
+
+# Create a new detached tmux session if it doesn't exist
+if ! tmux has-session -t $selected_name 2> /dev/null; then
+    tmux new-session -ds $selected_name -c $selected
+fi
+
+# Check if there is a current tmux client
+tmux_client_running=$(tmux display-message -p '#{client_pid}' 2> /dev/null)
+
+if [[ -n $tmux_client_running ]]; then
+    # Switch to the tmux session if a client is running
+    tmux switch-client -t $selected_name
+else
+    # Attach to the session if no client is running
+    tmux attach-session -t $selected_name
+fi
+
