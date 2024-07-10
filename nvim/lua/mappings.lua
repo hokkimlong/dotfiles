@@ -37,8 +37,9 @@ map("n", "<leader>fm", function()
   require("conform").format()
 end)
 
--- toggle 2
-map("n",'aa','<C-^>')
-
 -- close
 map("n","<leader>q", "<cmd>q <CR>")
+
+-- down
+map("n","<C-u>","<C-u> zz")
+map("n","<C-d>","<C-d> zz")

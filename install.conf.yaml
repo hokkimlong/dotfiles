@@ -9,6 +9,7 @@
     ~/.zshrc: zshrc
     ~/.tmux.conf: tmux.conf
     ~/.zshrc.pre-oh-my-zsh: zshrc.pre-oh-my-zsh
+    ~/.aerospace.toml: aerospace.toml
     ~/.config/nvim:
       path: nvim/**
       glob: true
