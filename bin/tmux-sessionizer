@@ -5,7 +5,7 @@ if [[ $# -eq 1 ]]; then
     selected=$1
 else
     # Use fzf to select a directory if no argument is provided
-    selected=$(find ~/work ~/ ~/Documents/playgorund -mindepth 1 -maxdepth 1 -type d | fzf)
+    selected=$(find ~/work ~/Documents/playground -mindepth 1 -maxdepth 2 -type d | fzf)
 fi
 
 # Exit if no directory is selected

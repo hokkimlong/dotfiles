@@ -78,7 +78,6 @@ PATH = '/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
 # cmd-enter = 'exec-and-forget open -n /System/Applications/Utilities/Terminal.app'
 
 alt-enter = 'exec-and-forget open -n /Applications/WezTerm.app'
-alt-shift-b = 'exec-and-forget open /Applications/Arc.app'
 
 # cmd-enter = 'macos-native-fullscreen'
 alt-left = 'workspace --wrap-around prev'
@@ -86,6 +85,7 @@ alt-right = 'workspace --wrap-around next'
 alt-shift-c = 'reload-config'
 alt-shift-f = 'layout floating tiling' # 'floating toggle' in i3
 alt-m = 'fullscreen'
+
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
 alt-h = 'focus left'
@@ -97,6 +97,7 @@ alt-shift-h = 'move left'
 alt-shift-j = 'move down'
 alt-shift-k = 'move up'
 alt-shift-l = 'move right'
+
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
 alt-1 = 'workspace 1'
@@ -121,10 +122,24 @@ alt-shift-8 = 'move-node-to-workspace 8'
 alt-shift-9 = 'move-node-to-workspace 9'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
-alt-tab = 'workspace-back-and-forth'
+alt-backtick = 'workspace-back-and-forth'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-alt-shift-r = 'mode resize'
+# alt-shift-r = 'mode resize'
+alt-shift-minus = 'resize smart -100'
+alt-shift-equal = 'resize smart +100'
+
 
 # close
 alt-shift-q = 'close'
+
+[workspace-to-monitor-force-assignment]
+1 = 'secondary'
+2 = 'secondary'
+3 = 'secondary'
+4 = 'secondary'
+5 = 'main'
+6 = 'main'
+7 = 'main'
+8 = 'main'
+9 = 'built-in'

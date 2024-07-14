@@ -5,10 +5,35 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- Enable completion triggered by <c-x><c-o>
     vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
+    vim.diagnostic.config({
+      virtual_text = false
+    })
+
     local opts = { buffer = ev.buf }
+
+    local _border = "single"
+
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+      vim.lsp.handlers.hover, {
+        border = _border
+      }
+    )
+
+    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+      vim.lsp.handlers.signature_help, {
+        border = _border
+      }
+    )
+
+    vim.diagnostic.config {
+      float = { border = _border }
+    }
+
+
+    vim.keymap.set("n", "I", vim.diagnostic.open_float, opts)
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "<leader>d", vim.lsp.buf.hover, opts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
     vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
     vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
@@ -55,7 +80,7 @@ lspconfig.lua_ls.setup {
 }
 
 -- setup multiple servers with same default options
-local servers = { "tsserver", "tailwindcss"  }
+local servers = { "tsserver", "tailwindcss", "jsonls" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -71,4 +96,3 @@ require 'lspconfig'.eslint.setup({
     })
   end,
 })
-
