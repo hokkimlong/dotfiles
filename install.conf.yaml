@@ -19,6 +19,9 @@
       glob: true
       path: bin/**
       create: true
+    ~/.gitconfig: gitconfig
+    ~/delta.themes.gitconfig: delta.themes.gitconfig
+    ~/Library/Application Support/lazygit/config.yml: lazygit.yml
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

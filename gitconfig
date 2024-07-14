@@ -1,0 +1,30 @@
+[user]
+	name = Long
+	email = 146718079+kimlong-vtech@users.noreply.github.com
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[include]
+  path = ~/delta.themes.gitconfig
+
+[core]
+	pager = delta --dark
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    features = woolly-mammoth
+    navigate = true    # use n and N to move between diff sections
+    # delta detects terminal colors automatically; set one of these to disable auto-detection
+    # dark = true
+    # light = true
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
