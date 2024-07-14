@@ -4,8 +4,8 @@ map("n", "ss", "<ESC><cmd> w <CR>")
 map("n", "ss", "<ESC><cmd> w <CR>")
 map("i", "jk", "<ESC>")
 map("i", "jj", "<ESC>")
-map("i", "kj", "<ESC>")
 map("i", "kk", "<ESC>")
+map("i", "kj", "<ESC>")
 
 -- scroll
 map("n", "J", "6<C-e>M")
@@ -52,8 +52,15 @@ map("n", "<leader>q", "<cmd>q <CR>")
 -- map("n", "-", "<cmd>:lua MiniFiles.open()<CR>")
 map("n", "<leader>bs", "<cmd>vsplit<CR>")
 
-
 -- next hunk
 map("n", "[h", "<cmd>Gitsigns next_hunk<CR>")
 map("n", "]h", "<cmd>Gitsigns prev_hunk<CR>")
 map("n", "<leader>hp", "<cmd>Gitsigns preview_hunk<CR><C-w>W")
+map("n", "<leader>hr", "<cmd>Gitsigns reset_hunk<CR><C-w>W")
+
+
+
+map('i', '<C-L>', 'copilot#Accept("\\<CR>")', {
+  expr = true,
+  replace_keycodes = false
+})

@@ -22,7 +22,6 @@ cmp.setup {
         fallback()
       end
     end, { "i", "s" }),
-
     -- luasnip
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
