@@ -5,30 +5,25 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- Enable completion triggered by <c-x><c-o>
     vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-    vim.diagnostic.config({
-      virtual_text = false
-    })
+    vim.diagnostic.config {
+      virtual_text = false,
+    }
 
     local opts = { buffer = ev.buf }
 
     local _border = "single"
 
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-      vim.lsp.handlers.hover, {
-        border = _border
-      }
-    )
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      border = _border,
+    })
 
-    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-      vim.lsp.handlers.signature_help, {
-        border = _border
-      }
-    )
+    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+      border = _border,
+    })
 
     vim.diagnostic.config {
-      float = { border = _border }
+      float = { border = _border },
     }
-
 
     vim.keymap.set("n", "I", vim.diagnostic.open_float, opts)
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
@@ -88,11 +83,11 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-require 'lspconfig'.eslint.setup({
-  -- on_attach = function(client, bufnr)
-  --   vim.api.nvim_create_autocmd("BufWritePre", {
-  --     buffer = bufnr,
-  --     command = "EslintFixAll",
-  --   })
-  -- end,
-})
+-- require 'lspconfig'.eslint.setup({
+-- on_attach = function(client, bufnr)
+--   vim.api.nvim_create_autocmd("BufWritePre", {
+--     buffer = bufnr,
+--     command = "EslintFixAll",
+--   })
+-- end,
+-- })

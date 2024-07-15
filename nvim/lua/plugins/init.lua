@@ -2,8 +2,14 @@ local plugins = {
 	{ lazy = true, "nvim-lua/plenary.nvim" },
 	-- theme
 	{
-		"LunarVim/darkplus.nvim",
-		config = function() end,
+		"rockyzhang24/arctic.nvim",
+		dependencies = { "rktjmp/lush.nvim" },
+		name = "arctic",
+		branch = "main",
+		priority = 1000,
+		config = function()
+			vim.cmd("colorscheme arctic")
+		end,
 	},
 
 	-- icons, for UI related plugins
@@ -128,16 +134,16 @@ local plugins = {
 	},
 
 	-- indent lines
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		config = function()
-			require("ibl").setup({
-				indent = { char = "│" },
-				scope = { char = "│", highlight = "Comment" },
-			})
-		end,
-	},
+	-- {
+	--   "lukas-reineke/indent-blankline.nvim",
+	--   event = { "BufReadPre", "BufNewFile" },
+	--   config = function()
+	--     require("ibl").setup {
+	--       indent = { char = "│" },
+	--       scope = { char = "│", highlight = "Comment" },
+	--     }
+	--   end,
+	-- },
 	-- git status on signcolumn etc
 	{
 		"lewis6991/gitsigns.nvim",
@@ -253,8 +259,20 @@ local plugins = {
 					n_steps_ahead = 1,
 				},
 			})
-			vim.keymap.set("n", "<CR>", "<Cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>")
+			-- vim.keymap.set("n", "<CR>", "<Cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>")
 		end,
+	},
+	{
+		"NeogitOrg/neogit",
+		dependencies = {
+			"nvim-lua/plenary.nvim", -- required
+			"sindrets/diffview.nvim", -- optional - Diff integration
+
+			-- Only one of these is needed, not both.
+			"nvim-telescope/telescope.nvim", -- optional
+			"ibhagwan/fzf-lua", -- optional
+		},
+		config = true,
 	},
 }
 
