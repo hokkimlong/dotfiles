@@ -25,4 +25,5 @@ vim.opt.rtp:prepend(lazypath)
 
 require("plugins")
 
-vim.cmd("colorscheme arctic")
+-- vim.cmd "colorscheme darkplus"
+-- vim.cmd "colorscheme tokyonight-night"

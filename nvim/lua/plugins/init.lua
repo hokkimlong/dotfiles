@@ -2,15 +2,20 @@ local plugins = {
 	{ lazy = true, "nvim-lua/plenary.nvim" },
 	-- theme
 	{
-		"rockyzhang24/arctic.nvim",
-		dependencies = { "rktjmp/lush.nvim" },
-		name = "arctic",
-		branch = "main",
+		"folke/tokyonight.nvim",
+		lazy = false,
 		priority = 1000,
 		config = function()
-			vim.cmd("colorscheme arctic")
+			vim.cmd("colorscheme tokyonight-night")
 		end,
 	},
+
+	-- {
+	-- 	"lunarvim/darkplus.nvim",
+	-- 	config = function()
+	-- 		vim.cmd("colorscheme darkplus")
+	-- 	end,
+	-- },
 
 	-- icons, for UI related plugins
 	{
@@ -48,7 +53,7 @@ local plugins = {
 				},
 				sections = {
 					lualine_a = { "mode" },
-					lualine_b = { { "branch", icon = { "󰘬" } }, "filename" },
+					lualine_b = { { "branch", icon = { "󰘬" } }, { "filename", path = 1 } },
 					lualine_c = { "diff", "diagnostics" },
 					lualine_x = { "filetype" },
 					lualine_y = {},
@@ -62,10 +67,10 @@ local plugins = {
 		event = "InsertEnter",
 		dependencies = {
 			-- cmp sources
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
+			-- "hrsh7th/cmp-buffer",
+			-- "hrsh7th/cmp-path",
 			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-nvim-lua",
+			-- "hrsh7th/cmp-nvim-lua",
 			-- autopairs , autocompletes ()[] etc
 			{
 				"windwp/nvim-autopairs",
@@ -134,16 +139,16 @@ local plugins = {
 	},
 
 	-- indent lines
-	-- {
-	--   "lukas-reineke/indent-blankline.nvim",
-	--   event = { "BufReadPre", "BufNewFile" },
-	--   config = function()
-	--     require("ibl").setup {
-	--       indent = { char = "│" },
-	--       scope = { char = "│", highlight = "Comment" },
-	--     }
-	--   end,
-	-- },
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			require("ibl").setup({
+				indent = { char = "│" },
+				scope = { char = "│", highlight = "Comment" },
+			})
+		end,
+	},
 	-- git status on signcolumn etc
 	{
 		"lewis6991/gitsigns.nvim",
@@ -202,34 +207,34 @@ local plugins = {
 			})
 		end,
 	},
-	{
-		"stevearc/oil.nvim",
-		opts = {},
-		-- Optional dependencies
-		dependencies = { "echasnovski/mini.icons" },
-		-- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
-		config = function()
-			require("oil").setup({
-				-- Your configuration comes here
-				-- or leave it empty to use the default settings
-				delete_to_trash = true,
-				skip_confirm_for_simple_edits = true,
-				view_options = {
-					show_hidden = true,
-				},
-			})
-			vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-			vim.api.nvim_create_autocmd("User", {
-				pattern = "OilEnter",
-				callback = vim.schedule_wrap(function(args)
-					local oil = require("oil")
-					if vim.api.nvim_get_current_buf() == args.data.buf and oil.get_cursor_entry() then
-						oil.open_preview()
-					end
-				end),
-			})
-		end,
-	},
+	-- {
+	-- 	"stevearc/oil.nvim",
+	-- 	opts = {},
+	-- 	-- Optional dependencies
+	-- 	dependencies = { "echasnovski/mini.icons" },
+	-- 	-- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+	-- 	config = function()
+	-- 		require("oil").setup({
+	-- 			-- Your configuration comes here
+	-- 			-- or leave it empty to use the default settings
+	-- 			delete_to_trash = true,
+	-- 			skip_confirm_for_simple_edits = true,
+	-- 			view_options = {
+	-- 				show_hidden = true,
+	-- 			},
+	-- 		})
+	-- 		vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+	-- 		vim.api.nvim_create_autocmd("User", {
+	-- 			pattern = "OilEnter",
+	-- 			callback = vim.schedule_wrap(function(args)
+	-- 				local oil = require("oil")
+	-- 				if vim.api.nvim_get_current_buf() == args.data.buf and oil.get_cursor_entry() then
+	-- 					oil.open_preview()
+	-- 				end
+	-- 			end),
+	-- 		})
+	-- 	end,
+	-- },
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
 		branch = "canary",
@@ -249,17 +254,47 @@ local plugins = {
 		},
 		-- See Commands section for default commands if you want to lazy load on them
 	},
+
 	{
-		"echasnovski/mini.nvim",
-		version = false,
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		-- ---@type Flash.Config
+		opts = {},
+  -- stylua: ignore
+  keys = {
+    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+    -- { "<CR>", mode = { "n"  }, function() require("flash").jump() end, desc = "Flash" },
+    { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+    { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+    { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+  },
 		config = function()
-			require("mini.jump").setup()
-			require("mini.jump2d").setup({
-				view = {
-					n_steps_ahead = 1,
+
+			-- vim.keymap.set("n", "<CR>", "<Cmd>lua require('flash').jump()<CR>")
+		end,
+	},
+	-- {
+	-- 	"echasnovski/mini.nvim",
+	-- 	version = false,
+	-- 	config = function()
+	-- 		require("mini.jump").setup()
+	-- 		require("mini.jump2d").setup({})
+	--
+	-- 	end,
+	-- },
+	{
+		"nvim-tree/nvim-tree.lua",
+		config = function()
+			require("nvim-tree").setup({
+				filters = {
+					dotfiles = false,
+				},
+				git = {
+					ignore = false,
 				},
 			})
-			-- vim.keymap.set("n", "<CR>", "<Cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>")
+			vim.keymap.set("n", "<C-n>", "<Cmd>NvimTreeFindFileToggle<CR>")
 		end,
 	},
 	{
@@ -273,6 +308,21 @@ local plugins = {
 			"ibhagwan/fzf-lua", -- optional
 		},
 		config = true,
+	},
+	{
+		"ThePrimeagen/harpoon",
+		config = function()
+			vim.keymap.set("n", "<C-e>", "<CMD>lua require('harpoon.ui').toggle_quick_menu()<CR>")
+			vim.keymap.set("n", ";e", "<CMD>lua require('harpoon.ui').toggle_quick_menu()<CR>")
+			vim.keymap.set("n", ";a", "<CMD>lua require('harpoon.mark').add_file()<CR>")
+			vim.keymap.set("n", ";n", "<CMD>lua require('harpoon.ui').nav_next()<CR>")
+			vim.keymap.set("n", ";p", "<CMD>lua require('harpoon.ui').nav_prev()<CR>")
+			vim.keymap.set("n", ";h", "<CMD>lua require('harpoon.ui').nav_file(1)<CR>")
+			vim.keymap.set("n", ";j", "<CMD>lua require('harpoon.ui').nav_file(2)<CR>")
+			vim.keymap.set("n", ";k", "<CMD>lua require('harpoon.ui').nav_file(3)<CR>")
+			vim.keymap.set("n", ";l", "<CMD>lua require('harpoon.ui').nav_file(4)<CR>")
+			vim.keymap.set("n", ";;", "<C-^>")
+		end,
 	},
 }
 

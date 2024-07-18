@@ -109,6 +109,7 @@ alias v="nvim"
 alias vo="nvim ."
 alias t="tmux"
 alias x="exit"
+source ~/.zprofile
 
 
 
